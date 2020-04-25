@@ -4,6 +4,3 @@
 [submodule "src/helpers"]
 	path = src/helpers
 	url = git@github.com:codepainter/helpers.git
-[submodule "callback-adapters"]
-	path = callback-adapters
-	url = git@github.com:codepainter/callback-adapters.git
