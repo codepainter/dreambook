@@ -1,0 +1,3 @@
+[submodule "src/mongoose-connect"]
+	path = src/mongoose-connect
+	url = git@github.com:codepainter/mongoose-connect.git

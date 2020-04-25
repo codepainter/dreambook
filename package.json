@@ -9,7 +9,8 @@
   "scripts": {
     "test": "tap test/**/*.test.js",
     "start": "fastify start -l info app.js",
-    "dev": "fastify start -w -l info -P app.js"
+    "dev": "fastify start -w -l info -P app.js",
+    "standard-fix": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -24,11 +25,14 @@
   "homepage": "https://github.com/codepainter/dreambook#readme",
   "dependencies": {
     "fastify": "^2.13.1",
-    "fastify-plugin": "^1.6.1",
     "fastify-autoload": "^1.2.2",
-    "fastify-cli": "^1.5.0"
+    "fastify-cli": "^1.5.0",
+    "fastify-plugin": "^1.6.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.1",
+    "standard": "^14.3.3",
     "tap": "^14.10.7"
   }
 }
