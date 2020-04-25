@@ -1,3 +1,6 @@
 [submodule "src/mongoose-connect"]
 	path = src/mongoose-connect
 	url = git@github.com:codepainter/mongoose-connect.git
+[submodule "src/helpers"]
+	path = src/helpers
+	url = git@github.com:codepainter/helpers.git
