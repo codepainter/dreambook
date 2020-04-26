@@ -1,3 +1,4 @@
+// ENTITIES
 const { makeDream, makeFile } = require('../dream')
 
 module.exports = function makeCreateDream ({ dreamQuery, fileQuery }) {
@@ -10,14 +11,23 @@ module.exports = function makeCreateDream ({ dreamQuery, fileQuery }) {
         type: file.type(),
         filename: file.filename(),
         path: file.path(),
-        meta: file.meta().payload()
+        // meta: file.meta().payload()
+        meta: {
+          fieldname: file.meta().fieldname(),
+          originalname: file.meta().originalname(),
+          encoding: file.meta().encoding(),
+          mimetype: file.meta().mimetype(),
+          destination: file.meta().destination(),
+          filename: file.meta().filename(),
+          path: file.meta().path(),
+          size: file.meta().size()
+        }
       }))
     log('filesMade:', filesMade)
     const dreamMade = makeDream({ ...dreamData, images: filesMade })
     log('dreamMade:', dreamMade.payload())
     return await dreamQuery.create({
       userId: dreamMade.userId(), //
-      // images: dreamMade.images(),
       images: await fileQuery.createMany(filesMade),
       date: dreamMade.date(),
       caption: dreamMade.caption()

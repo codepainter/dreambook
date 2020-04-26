@@ -1,6 +1,6 @@
 const { CustomError } = require('../../custom-errors')
 
-module.exports = function buildMakeDream ({ mongoId, time, sanitize }) {
+module.exports = function buildMakeDream ({ mongoId, time, sanitize, makeFile }) {
   return function makeDream ({
     id = mongoId.create(),
     userId = mongoId.create(), //
@@ -20,13 +20,13 @@ module.exports = function buildMakeDream ({ mongoId, time, sanitize }) {
 
     if (sanitize.trim(caption).length === 0) throw new CustomError({ message: 'Should have a caption', code: 400 })
 
-    let sanitizedDeleted = typeof deleted === 'string' ? sanitize.toBoolean(deleted) : deleted
+    let sanitizedDeleted = sanitize.toBoolean(deleted)
 
     return Object.freeze({
-      payload: () => ({ id, userId, images, date, caption }),
+      payload: () => ({ id, userId, images, date, caption }), // shorthand
       id: () => id,
       userId: () => userId,
-      images: () => images,
+      images: () => images.map(file => makeFile(file)),
       date: () => time.toISOString(date),
       caption: () => caption,
       deleted: () => sanitizedDeleted

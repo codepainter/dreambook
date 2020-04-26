@@ -26,7 +26,7 @@ module.exports = function buildMakeMeta ({}) {
     if (size === 0) throw new CustomError({ message: 'Not a valid size', code: 400 })
 
     return Object.freeze({
-      payload: () => ({ fieldname, originalname, encoding, mimetype, destination, filename, path, size }),
+      payload: () => ({ fieldname, originalname, encoding, mimetype, destination, filename, path, size }), // shorthand
       fieldname: () => fieldname,
       originalname: () => originalname,
       encoding: () => encoding,
