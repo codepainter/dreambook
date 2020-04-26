@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "tap test/**/*.test.js",
+    "test:spec": "nyc mocha src/**/*.spec.js",
     "start": "fastify start -l info app.js",
     "dev": "fastify start -w -l info -P app.js",
     "standard-fix": "standard --fix"
