@@ -4,6 +4,7 @@ module.exports = function makeDreamQuery ({ Dream }) {
   return Object.freeze({
     create,
     findById,
+    findByUserId,
     updateById,
     deleteById
   })
@@ -15,12 +16,23 @@ module.exports = function makeDreamQuery ({ Dream }) {
     return { id: _id, ...info, _id }
   }
 
-  async function findById ({ dreamId }) {
+  async function findById ({ dreamId, deleted = false }) {
     const { _id, ...found } = await Dream.findById(dreamId)
       .populate('files')
       .lean()
     log('findById:', { _id, ...found })
     return { id: _id, ...found, _id }
+  }
+
+  async function findByUserId ({ userId }) {
+    const dreams = await Dream.find({ userId, deleted: false })
+      .populate('files')
+      .lean()
+    log('findByuserId:', dreams)
+    return dreams.map(dream => {
+      let { _id, ...info } = dream
+      return { id: _id, ...info, _id }
+    })
   }
 
   async function updateById ({ dreamId, toUpdate }) {

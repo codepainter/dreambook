@@ -29,11 +29,13 @@
     "fastify": "^2.13.1",
     "fastify-autoload": "^1.2.2",
     "fastify-cli": "^1.5.0",
+    "fastify-multer": "^1.5.2",
     "fastify-plugin": "^1.6.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-round": "^1.0.1",
-    "mongoose": "^5.9.10"
+    "mongoose": "^5.9.10",
+    "validator": "^13.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
