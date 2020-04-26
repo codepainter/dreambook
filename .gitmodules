@@ -7,3 +7,6 @@
 [submodule "src/callback-adapters"]
 	path = src/callback-adapters
 	url = git@github.com:codepainter/callback-adapters.git
+[submodule "src/custom-errors"]
+	path = src/custom-errors
+	url = git@github.com:codepainter/custom-error.git
