@@ -6,18 +6,21 @@ module.exports = function buildMakeDream ({ mongoId, time, sanitize }) {
     userId = mongoId.create(), //
     images = [],
     date = Date.now(),
-    caption = ''
+    caption = '',
+    deleted = false
   } = {}) {
     if (!mongoId.isValid(id)) throw new CustomError({ message: 'Not a valid dreamId', code: 400 })
 
     if (!mongoId.isValid(userId)) throw new CustomError({ message: 'Not a valid userId', code: 400 })
 
-    if (!Array.isArray(image)) throw new CustomError({ message: 'images is not an array', code: 400 })
+    if (!Array.isArray(images)) throw new CustomError({ message: 'images is not an array', code: 400 })
     if (images.length === 0) throw new CustomError({ message: 'Should have at least one image', code: 400 })
 
     if (!time.isValid(date)) throw new CustomError({ message: 'Not a valid date', code: 400 })
 
     if (sanitize.trim(caption).length === 0) throw new CustomError({ message: 'Should have a caption', code: 400 })
+
+    let sanitizedDeleted = typeof deleted === 'string' ? sanitize.toBoolean(deleted) : deleted
 
     return Object.freeze({
       payload: () => ({ id, userId, images, date, caption }),
@@ -25,7 +28,8 @@ module.exports = function buildMakeDream ({ mongoId, time, sanitize }) {
       userId: () => userId,
       images: () => images,
       date: () => time.toISOString(date),
-      caption: () => caption
+      caption: () => caption,
+      deleted: () => sanitizedDeleted
     })
   }
 }
