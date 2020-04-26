@@ -10,10 +10,9 @@ module.exports = function makeNewDream ({ createDream }) {
     } catch (error) {
       log('error:', error)
       return {
-        statusCode: error.statusCode,
+        statusCode: error.code,
         body: error.message
       }
     }
   }
 }
-// TODO: next... custom error
