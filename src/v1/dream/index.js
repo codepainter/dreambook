@@ -9,6 +9,11 @@ const time = Object.freeze({
   toISOString: date => moment(date).toISOString()
 })
 
+const validate = Object.freeze({
+  isBoolean: arg => typeof arg !== 'boolean',
+  isBooleanString: str => validator.isBoolean(str)
+})
+
 const sanitize = Object.freeze({
   trim: string => lodash.trim(string),
   toBoolean: obj => (typeof obj !== 'boolean' ? validator.toBoolean(obj) : obj)
@@ -21,7 +26,7 @@ const mongoId = Object.freeze({
 
 const makeMeta = require('./meta')()
 const makeFile = require('./file')({ mongoId, makeMeta })
-const makeDream = require('./dream')({ mongoId, time, sanitize, makeFile })
+const makeDream = require('./dream')({ mongoId, time, validate, sanitize, makeFile })
 
 module.exports = {
   makeDream, //
