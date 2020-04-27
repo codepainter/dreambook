@@ -13,7 +13,7 @@ module.exports = function makeFileQuery ({ File }) {
     const created = await File.create(fileInfo)
     const { _id, ...info } = created.toObject()
     log('create:', { _id, ...info })
-    return { id: _id, ...info, _id }
+    return { id: _id.toString(), ...info, _id }
   }
 
   async function createMany (fileInfos) {
@@ -25,18 +25,18 @@ module.exports = function makeFileQuery ({ File }) {
   async function findById ({ fileId } = {}) {
     const { _id, ...found } = await File.findById(fileId).lean()
     log('findById:', { _id, ...found })
-    return { id: _id, ...found, _id }
+    return { id: _id.toString(), ...found, _id }
   }
 
   async function updateById ({ fileId, toUpdate } = {}) {
     const { _id, ...updated } = await File.findByIdAndUpdate(fileId, toUpdate, { new: true, lean: true, upsert: true })
     log('updateById:', { _id, ...updated })
-    return { id: _id, ...updated, _id }
+    return { id: _id.toString(), ...updated, _id }
   }
 
   async function deleteById ({ fileId } = {}) {
     const { _id, ...deleted } = await File.findByIdAndDelete(fileId)
     log('deleteById:', { _id, ...deleted })
-    return { id: _id, ...deleted, _id }
+    return { id: _id.toString(), ...deleted, _id }
   }
 }

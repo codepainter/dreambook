@@ -6,7 +6,8 @@ module.exports = function makeDreamModel ({ mongoose, File }) {
       images: [{ type: ObjectId, ref: 'File', default: null }],
       date: { type: Date, index: true },
       caption: { type: String, default: '' },
-      deleted: { type: Boolean, default: false }
+      achieved: { type: Date, index: true },
+      deleted: { type: Boolean, default: false, index: true }
     },
     {
       timestamps: true
