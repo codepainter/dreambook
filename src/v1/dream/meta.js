@@ -1,6 +1,6 @@
 const { CustomError } = require('../../custom-errors')
 
-module.exports = function buildMakeMeta ({}) {
+module.exports = function buildMakeMeta () {
   return function makeMeta ({
     fieldname = 'files',
     originalname = '',

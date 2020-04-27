@@ -30,7 +30,7 @@ module.exports = function makeDreamQuery ({ Dream }) {
       .lean()
     log('findByuserId:', dreams)
     return dreams.map(dream => {
-      let { _id, ...info } = dream
+      const { _id, ...info } = dream
       return { id: _id, ...info, _id }
     })
   }

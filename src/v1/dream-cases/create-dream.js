@@ -26,7 +26,7 @@ module.exports = function makeCreateDream ({ dreamQuery, fileQuery }) {
     log('filesMade:', filesMade)
     const dreamMade = makeDream({ ...dreamData, images: filesMade })
     log('dreamMade:', dreamMade.payload())
-    return await dreamQuery.create({
+    return dreamQuery.create({
       userId: dreamMade.userId(), //
       images: await fileQuery.createMany(filesMade),
       date: dreamMade.date(),

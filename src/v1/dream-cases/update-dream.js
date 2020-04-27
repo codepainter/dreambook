@@ -12,7 +12,7 @@ module.exports = function makeUpdateDream ({ dreamQuery }) {
 
     const dreamMade = makeDream(dream)
     log('dreamMade:', dreamMade.payload())
-    return await dreamQuery.updateById({
+    return dreamQuery.updateById({
       dreamId: dreamMade.id(), //
       toUpdate: { ...changes }
     })

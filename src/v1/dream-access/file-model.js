@@ -1,5 +1,5 @@
 module.exports = function makeFileModel ({ mongoose }) {
-  const { ObjectId } = mongoose.Types
+  // const { ObjectId } = mongoose.Types
   const schema = new mongoose.Schema(
     {
       type: { type: String, default: 'dream' },
