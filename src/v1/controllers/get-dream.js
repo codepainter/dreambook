@@ -1,6 +1,6 @@
 module.exports = function makeViewDream ({ readDream }) {
   return async function viewDream (httpRequest) {
-    const log = require('debug')('controllers:viewDream')
+    const log = require('debug')('controllers:get-dream')
     try {
       const value = await readDream({ dreamId: httpRequest.body.dreamId })
       return {
