@@ -1,7 +1,7 @@
 // TODO: this
 module.exports = function makeEditDream ({ createDream }) {
   return async function editDream (httpRequest) {
-    const log = require('debug')('controllers:editDream')
+    const log = require('debug')('controllers:patch-dream')
     try {
       const value = await editDream({ dreamId: httpRequest.body.dreamId })
       return {

@@ -1,6 +1,6 @@
 const { getEnv } = require('../helpers')
 
-const { newDream, viewDream, editDream, removeDream } = require('./controllers')
+const { putDream, getDream, patchDream, delDream, rmvDream } = require('./controllers')
 
 const os = require('os')
 const multer = require('fastify-multer')
@@ -11,9 +11,13 @@ module.exports = async (fastify, opts) => {
   fastify.get('/health', async (request, reply) => reply.send('I am healthy'))
 
   fastify.register(multer.contentParser)
-  const { callback } = require('../callback-adapters').fastify({ apiVersion: getEnv('API_VERSION', 'service-f0.0.0') })
-  fastify.post('/new', { preHandler: [upload.array('files')] }, callback(newDream))
-  fastify.post('/view', callback(viewDream))
-  fastify.post('/update', callback(editDream))
-  fastify.post('/remove', callback(removeDream))
+  const { callback } = require('../callback-adapters').fastify({
+    apiVersion: getEnv('API_VERSION', 'service-f0.0.0') //
+  })
+
+  fastify.post('/new', { preHandler: [upload.array('files')] }, callback(putDream))
+  fastify.post('/view', callback(getDream))
+  fastify.post('/update', callback(patchDream))
+  fastify.post('/delete', callback(delDream))
+  fastify.post('/remove', callback(rmvDream))
 }
