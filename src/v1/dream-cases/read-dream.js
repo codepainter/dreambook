@@ -7,7 +7,7 @@ module.exports = function makeReadDream ({ dreamQuery }) {
     const dream = await dreamQuery.findById({ dreamId })
     const dreamMade = makeDream(dream)
     log('dreamMade:', dreamMade.payload())
-    return await dreamQuery.findById({
+    return dreamQuery.findById({
       dreamId: dreamMade.id() //
     })
   }

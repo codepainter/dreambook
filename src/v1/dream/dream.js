@@ -20,7 +20,7 @@ module.exports = function buildMakeDream ({ mongoId, time, sanitize, makeFile })
 
     if (sanitize.trim(caption).length === 0) throw new CustomError({ message: 'Should have a caption', code: 400 })
 
-    let sanitizedDeleted = sanitize.toBoolean(deleted)
+    const sanitizedDeleted = sanitize.toBoolean(deleted)
 
     return Object.freeze({
       payload: () => ({ id, userId, images, date, caption }), // shorthand

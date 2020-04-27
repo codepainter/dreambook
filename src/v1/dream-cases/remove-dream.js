@@ -1,5 +1,5 @@
 const { CustomError } = require('../../custom-errors')
-const makeDream = require('../dream')
+// const makeDream = require('../dream')
 
 module.exports = function makeRemoveDream ({ dreamQuery }) {
   const log = require('debug')('use-case:removeDream')
@@ -10,6 +10,6 @@ module.exports = function makeRemoveDream ({ dreamQuery }) {
     const dream = await dreamQuery.findById({ dreamId: dreamId })
     if (!dream) throw new CustomError({ message: 'Dream not found', code: 404 })
 
-    return await dreamQuery.deleteById({ dreamId })
+    return dreamQuery.deleteById({ dreamId })
   }
 }

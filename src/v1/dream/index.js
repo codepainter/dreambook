@@ -19,7 +19,7 @@ const mongoId = Object.freeze({
   isValid: id => ObjectId.isValid(id)
 })
 
-const makeMeta = require('./meta')({})
+const makeMeta = require('./meta')()
 const makeFile = require('./file')({ mongoId, makeMeta })
 const makeDream = require('./dream')({ mongoId, time, sanitize, makeFile })
 
