@@ -36,6 +36,7 @@
     "moment": "^2.24.0",
     "moment-round": "^1.0.1",
     "mongoose": "^5.9.10",
+    "uuid": "^7.0.3",
     "validator": "^13.0.0"
   },
   "devDependencies": {

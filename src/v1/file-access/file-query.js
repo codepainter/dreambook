@@ -25,13 +25,16 @@ module.exports = function makeFileQuery ({ File }) {
   }
 
   async function findById ({ fileId } = {}) {
-    const { _id, ...info } = await File.findById(fileId).lean()
+    const { _id, ...info } = await File.findById(fileId)
+      .populate('gcs')
+      .lean()
     log('findById:', { _id, ...info })
     return { id: _id.toString(), ...info, _id }
   }
 
   async function findManyById ({ fileIds } = {}) {
     const foundMany = await File.find({ fileIds })
+      .populate('gcs')
       .sort({ createdAt: 1 })
       .lean()
     log('findManyById:', foundMany)
