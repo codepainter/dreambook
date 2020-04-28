@@ -1,11 +1,11 @@
 module.exports = function makeFileModel ({ mongoose }) {
-  // const { ObjectId } = mongoose.Types
+  const { ObjectId } = mongoose.Types
   const schema = new mongoose.Schema(
     {
       type: { type: String, default: 'dream', index: true },
       filename: { type: String, default: '', alias: 'url' },
       path: { type: String, default: '', alias: 'localpath' },
-      meta: { type: Object, default: null }
+      meta: { type: Object, default: null },
       // exif: { type: Object, default: null },
       // s3: [
       //   {
@@ -15,6 +15,7 @@ module.exports = function makeFileModel ({ mongoose }) {
       //     key: { type: String, default: '', alias: 'Key' }
       //   }
       // ],
+      gcs: [{ type: ObjectId, ref: 'GCS' }]
       // point: {
       //   type: {
       //     type: String,
