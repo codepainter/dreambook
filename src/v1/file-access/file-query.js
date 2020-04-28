@@ -36,7 +36,7 @@ module.exports = function makeFileQuery ({ File }) {
       .lean()
     log('findManyById:', foundMany)
     return foundMany.map(file => {
-      let { _id, ...info } = file
+      const { _id, ...info } = file
       return { id: _id.toString(), ...info, _id }
     })
   }
