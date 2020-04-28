@@ -10,13 +10,13 @@ const time = Object.freeze({
 })
 
 const validate = Object.freeze({
-  isBoolean: arg => typeof arg !== 'boolean',
+  isBoolean: arg => typeof arg === 'boolean',
   isBooleanString: str => validator.isBoolean(str)
 })
 
 const sanitize = Object.freeze({
   trim: string => lodash.trim(string),
-  toBoolean: obj => (typeof obj !== 'boolean' ? validator.toBoolean(obj) : obj)
+  toBoolean: string => validator.toBoolean(string, true)
 })
 
 const mongoId = Object.freeze({

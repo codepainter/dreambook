@@ -22,11 +22,11 @@ module.exports = function buildMakeDream ({ mongoId, time, validate, sanitize, m
 
     if (sanitize.trim(caption).length === 0) throw new CustomError({ message: 'A Dream should have a caption', code: 400 })
 
-    if (validate.isBoolean(achieved)) {
+    if (!validate.isBoolean(achieved)) {
       if (!validate.isBooleanString(achieved)) throw new CustomError({ message: 'achieved should be a valid boolean value', code: 400 })
       achieved = sanitize.toBoolean(achieved)
     }
-    if (validate.isBoolean(deleted)) {
+    if (!validate.isBoolean(deleted)) {
       if (!validate.isBooleanString(deleted)) throw new CustomError({ message: 'deleted should be a valid boolean value', code: 400 })
       deleted = sanitize.toBoolean(deleted)
     }
