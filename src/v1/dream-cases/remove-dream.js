@@ -9,8 +9,8 @@ module.exports = function makeRemoveDream ({ dreamQuery, fileQuery }) {
     const dream = await dreamQuery.findById({ dreamId })
     if (!dream) throw new CustomError({ message: 'Dream not found', code: 404 })
 
-    let hardDeletedDream = await dreamQuery.hardDeleteById({ dreamId })
-    let hardDeletedFile = await fileQuery.hardDeleteManyById({ fileIds: hardDeletedDream.images })
+    const hardDeletedDream = await dreamQuery.hardDeleteById({ dreamId })
+    const hardDeletedFile = await fileQuery.hardDeleteManyById({ fileIds: hardDeletedDream.images })
 
     return {
       dream: hardDeletedDream,

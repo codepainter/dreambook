@@ -23,7 +23,7 @@ module.exports = function makeDreamQuery ({ Dream }) {
       .lean()
     log('findById:', found)
     if (!found) return false
-    let { _id, ...info } = found
+    const { _id, ...info } = found
     return { id: _id.toString(), ...info, _id }
   }
 

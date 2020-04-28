@@ -23,7 +23,7 @@ module.exports = function buildMakeMeta () {
       'image/jpeg', // .jpe .jpeg .jpg
       'video/mpeg', // .mp2 .mpa .mpe .mpeg .mpg .mpv2 .
       'video/mp4', // .mp4
-      'video/quicktime' // .mov .	qt
+      'video/quicktime' // .mov .qt
     ]
     if (!allowedMimeTypes.includes(mimetype)) throw new CustomError({ message: 'mimetype not allowed', code: 400 })
 
