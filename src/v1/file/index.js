@@ -6,7 +6,7 @@ const mongoId = Object.freeze({
 })
 
 const validate = Object.freeze({
-  isAllowed: (allowedMimeTypes, mimetype) => (allowedMimeTypes.includes(mimetype) ? true : false)
+  isAllowed: (allowedMimeTypes, mimetype) => allowedMimeTypes.includes(mimetype)
 })
 
 const makeGCS = require('../gcs')
