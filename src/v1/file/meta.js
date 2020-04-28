@@ -1,6 +1,6 @@
 const { CustomError } = require('../../custom-errors')
 
-module.exports = function buildMakeMeta () {
+module.exports = function buildMakeMeta ({ validate }) {
   return function makeMeta ({
     fieldname = 'files',
     originalname = '',
@@ -25,7 +25,7 @@ module.exports = function buildMakeMeta () {
       'video/mp4', // .mp4
       'video/quicktime' // .mov .qt
     ]
-    if (!allowedMimeTypes.includes(mimetype)) throw new CustomError({ message: 'mimetype not allowed', code: 400 })
+    if (!validate.isAllowed(allowedMimeTypes, mimetype)) throw new CustomError({ message: 'mimetype not allowed', code: 400 })
 
     if (destination.length === 0) throw new CustomError({ message: 'Not a valid destination', code: 400 })
 

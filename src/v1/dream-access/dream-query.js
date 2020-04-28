@@ -19,7 +19,7 @@ module.exports = function makeDreamQuery ({ Dream }) {
 
   async function findById ({ dreamId, deleted = false }) {
     const found = await Dream.findById(dreamId)
-      .populate('images')
+      .populate({ path: 'images', populate: { path: 'gcs' } })
       .lean()
     log('findById:', found)
     if (!found) return false
@@ -29,7 +29,7 @@ module.exports = function makeDreamQuery ({ Dream }) {
 
   async function findByUserId ({ userId }) {
     const dreams = await Dream.find({ userId, deleted: false })
-      .populate('images')
+      .populate({ path: 'images', populate: { path: 'gcs' } })
       .lean()
     log('findByuserId:', dreams)
     if (dreams.length === 0) return false
@@ -41,7 +41,7 @@ module.exports = function makeDreamQuery ({ Dream }) {
 
   async function findByUserIdAndAchieved ({ userId, achieved = true, deleted = false }) {
     const dreams = await Dream.find({ userId, achieved, deleted })
-      .populate('images')
+      .populate({ path: 'images', populate: { path: 'gcs' } })
       .lean()
     log('findByUserIdAndAchieved:', dreams)
     if (dreams.length === 0) return false

@@ -31,11 +31,13 @@ module.exports = function buildMakeDream ({ mongoId, time, validate, sanitize, m
       deleted = sanitize.toBoolean(deleted)
     }
 
+    const madeImages = images.map(file => makeFile(file))
+
     return Object.freeze({
-      payload: () => ({ id, userId, images, date, caption, achieved, deleted }), // shorthand
+      payload: () => ({ id, userId, images: madeImages, date, caption, achieved, deleted }), // shorthand
       id: () => id,
       userId: () => userId,
-      images: () => images.map(file => makeFile(file)),
+      images: () => madeImages,
       date: () => date,
       caption: () => caption,
       achieved: () => achieved,
