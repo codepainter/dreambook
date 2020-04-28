@@ -22,16 +22,16 @@ module.exports = function buildMakeFile ({ mongoId, makeMeta, makeGCS }) {
     const madeMeta = makeMeta(meta)
     console.log('makeFile:gcs')
     console.log(gcs)
-    const madeGCS = gcs.map(g => makeGCS(g))
+    // const madeGCS = gcs.map(g => makeGCS(g).payload())
 
     return Object.freeze({
-      payload: () => ({ id, type, filename, path, meta: madeMeta, gcs: madeGCS }), // shorthand
+      payload: () => ({ id, type, filename, path, meta: madeMeta, gcs }), // shorthand
       id: () => id,
       type: () => type,
       filename: () => filename,
       path: () => path,
       meta: () => madeMeta,
-      gcs: () => madeGCS
+      gcs: () => gcs
     })
   }
 }
