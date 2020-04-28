@@ -1,8 +1,8 @@
 const { ObjectId } = require('mongoose').Types
 const moment = require('moment')
 require('moment-round')
-const lodash = require('lodash')
-const validator = require('validator').default
+const { trim } = require('lodash')
+const { isBoolean, toBoolean } = require('validator').default
 
 const time = Object.freeze({
   isValid: date => moment(date).isValid(),
@@ -11,12 +11,12 @@ const time = Object.freeze({
 
 const validate = Object.freeze({
   isBoolean: arg => typeof arg === 'boolean',
-  isBooleanString: str => validator.isBoolean(str)
+  isBooleanString: str => isBoolean(str)
 })
 
 const sanitize = Object.freeze({
-  trim: string => lodash.trim(string),
-  toBoolean: string => validator.toBoolean(string, true)
+  trim: string => trim(string),
+  toBoolean: string => toBoolean(string, true)
 })
 
 const mongoId = Object.freeze({
@@ -24,12 +24,7 @@ const mongoId = Object.freeze({
   isValid: id => ObjectId.isValid(id)
 })
 
-const makeMeta = require('./meta')()
-const makeFile = require('./file')({ mongoId, makeMeta })
+const makeFile = require('../file')
 const makeDream = require('./dream')({ mongoId, time, validate, sanitize, makeFile })
 
-module.exports = {
-  makeDream, //
-  makeFile,
-  makeMeta
-}
+module.exports = makeDream

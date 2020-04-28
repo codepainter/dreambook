@@ -1,5 +1,5 @@
-module.exports = function makeDeleteDream ({ deleteDream }) {
-  return async function deleteDream (httpRequest) {
+module.exports = function makeDelDream ({ deleteDream }) {
+  return async function delDream (httpRequest) {
     const log = require('debug')('controllers:del-dream')
     try {
       const value = await deleteDream({ dreamId: httpRequest.body.dreamId })

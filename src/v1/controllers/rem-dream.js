@@ -1,5 +1,5 @@
-module.exports = function makeRemoveDream ({ removeDream }) {
-  return async function removeDream (httpRequest) {
+module.exports = function makeRemDream ({ removeDream }) {
+  return async function remDream (httpRequest) {
     const log = require('debug')('controllers:rem-dream')
     try {
       const value = await removeDream({ dreamId: httpRequest.body.dreamId })

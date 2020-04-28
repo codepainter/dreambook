@@ -1,4 +1,4 @@
-module.exports = function makeDreamModel ({ mongoose, File }) {
+module.exports = function makeDreamModel ({ mongoose }) {
   const { ObjectId } = mongoose.Types
   const schema = new mongoose.Schema(
     {

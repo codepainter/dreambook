@@ -5,19 +5,27 @@ module.exports = function buildMakeMeta () {
     fieldname = 'files',
     originalname = '',
     encoding = '',
-    mimetype = 'image/jpeg',
+    mimetype = '',
     destination = '',
     filename = '',
     path = '',
     size = 0
   } = {}) {
-    if (!fieldname) throw new CustomError({ message: 'Not a valid fieldname', code: 400 })
+    if (fieldname.length === 0) throw new CustomError({ message: 'Not a valid fieldname', code: 400 })
 
     if (originalname.length === 0) throw new CustomError({ message: 'Not a valid originalname', code: 400 })
 
     if (encoding.length === 0) throw new CustomError({ message: 'Not a valid encoding', code: 400 })
 
     if (mimetype.length === 0) throw new CustomError({ message: 'Not a valid mimetype', code: 400 })
+    const allowedMimeTypes = [
+      'image/gif', // .gif
+      'image/jpeg', // .jpe .jpeg .jpg
+      'video/mpeg', // .mp2 .mpa .mpe .mpeg .mpg .mpv2 .
+      'video/mp4', // .mp4
+      'video/quicktime' // .mov .	qt
+    ]
+    if (!allowedMimeTypes.includes(mimetype)) throw new CustomError({ message: 'mimetype not allowed', code: 400 })
 
     if (destination.length === 0) throw new CustomError({ message: 'Not a valid destination', code: 400 })
 

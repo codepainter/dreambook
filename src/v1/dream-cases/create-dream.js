@@ -1,12 +1,13 @@
 // ENTITIES
-const { makeDream, makeFile } = require('../dream')
+const makeDream = require('../dream')
+const makeFile = require('../file')
 
 module.exports = function makeCreateDream ({ dreamQuery, fileQuery }) {
   const log = require('debug')('use-case:createDream')
   return async function createDream (dreamData) {
     log('dreamData:', dreamData)
     const filesMade = dreamData.images
-      .map(file => makeFile({ filename: file.originalname, path: file.path, meta: file }))
+      .map(file => makeFile({ type: 'dream', filename: file.originalname, path: file.path, meta: file }))
       .map(file => ({
         type: file.type(),
         filename: file.filename(),
