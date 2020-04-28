@@ -20,13 +20,14 @@ module.exports = function buildMakeGCS ({ mongoId }) {
     if (gslink.length === 0) throw new CustomError({ message: 'Must provide gslink', code: 400 })
 
     return Object.freeze({
-      payload: () => ({ id, type, filename, bucket, key, gslink }),
+      payload: () => ({ id, type, filename, bucket, key, gslink, _id: id }),
       id: () => id,
       type: () => type,
       filename: () => filename,
       bucket: () => bucket,
       key: () => key,
-      gslink: () => gslink
+      gslink: () => gslink,
+      _id: () => id
     })
   }
 }
