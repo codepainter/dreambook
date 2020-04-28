@@ -5,13 +5,13 @@ const { createDream, readDream, updateDream, deleteDream, removeDream } = requir
 const putDream = require('./put-dream')({ createDream })
 const getDream = require('./get-dream')({ readDream })
 const patchDream = require('./patch-dream')({ updateDream })
-const delDream = require('./del-dream')({ deleteDream })
-const rmvDream = require('./rem-dream')({ removeDream })
+const delDream = require('./del-dream')({ deleteDream }) // soft delete
+const remDream = require('./rem-dream')({ removeDream }) // hard delete
 
 module.exports = {
   putDream,
   getDream,
   patchDream,
   delDream,
-  rmvDream
+  remDream
 }

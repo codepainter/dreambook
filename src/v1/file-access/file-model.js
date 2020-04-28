@@ -2,7 +2,7 @@ module.exports = function makeFileModel ({ mongoose }) {
   // const { ObjectId } = mongoose.Types
   const schema = new mongoose.Schema(
     {
-      type: { type: String, default: 'dream' },
+      type: { type: String, default: 'dream', index: true },
       filename: { type: String, default: '', alias: 'url' },
       path: { type: String, default: '', alias: 'localpath' },
       meta: { type: Object, default: null }
