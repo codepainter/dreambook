@@ -40,7 +40,7 @@ module.exports = function makeCreateDream ({ dreamQuery, fileQuery, GCSQuery }) 
     const filesMade = filesUploaded.map(file => ({
       type: file.type(),
       filename: file.gcs()[0].filename,
-      path: file.path(),
+      // path: file.path(),
       path: file.gcs()[0].gslink,
       meta: file.meta().payload(),
       // meta: {
@@ -57,6 +57,7 @@ module.exports = function makeCreateDream ({ dreamQuery, fileQuery, GCSQuery }) 
     }))
 
     log('filesMade:', filesMade)
+    log('filesMade[0]:', filesMade[0])
     const dreamMade = makeDream({ ...dreamData, images: filesMade })
     log('dreamMade:', dreamMade.payload())
     return dreamQuery.create({

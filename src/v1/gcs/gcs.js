@@ -5,9 +5,9 @@ module.exports = function buildMakeGCS ({ mongoId }) {
     id = mongoId.create(), //
     type = '',
     filename = '',
+    gslink = '',
     bucket = '',
-    key = '',
-    gslink = ''
+    key = ''
   } = {}) {
     if (type.length === 0) throw new CustomError({ message: 'Must provide type', code: 400 })
 
