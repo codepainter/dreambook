@@ -2,9 +2,9 @@ module.exports = function makeGCSModel ({ mongoose }) {
   const { ObjectId } = mongoose.Types
   const schema = new mongoose.Schema(
     {
-      type: { type: String, default: '' },
+      type: { type: String, default: '', index: true },
       filename: { type: String, default: '', alias: 'url' },
-      gslink: { type: String, default: '' },
+      gslink: { type: String, default: '', index: true },
       bucket: { type: String, default: '' },
       key: { type: String, default: '', alias: 'Key' }
     },

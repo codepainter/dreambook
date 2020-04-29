@@ -21,7 +21,10 @@ module.exports = function makeFileQuery ({ File }) {
   async function createMany (fileInfos) {
     const created = await File.insertMany(fileInfos, { lean: true })
     log('createMany:', created)
-    return created
+    return created.map(file => {
+      let { _id, ...info } = file
+      return { id: _id.toString(), ...info, _id }
+    })
   }
 
   async function findById ({ fileId } = {}) {

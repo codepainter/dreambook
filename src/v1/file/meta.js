@@ -21,13 +21,17 @@ module.exports = function buildMakeMeta ({ validate }) {
     const allowedMimeTypes = [
       'image/gif', // .gif
       'image/jpeg', // .jpe .jpeg .jpg
+      'image/png', // .png
       'video/mpeg', // .mp2 .mpa .mpe .mpeg .mpg .mpv2 .
       'video/mp4', // .mp4
       'video/quicktime' // .mov .qt
     ]
+    // TODO: log thrown not allowed mimetype
     if (!validate.isAllowed(allowedMimeTypes, mimetype)) throw new CustomError({ message: 'mimetype not allowed', code: 400 })
 
     if (destination.length === 0) throw new CustomError({ message: 'Not a valid destination', code: 400 })
+
+    if (filename.length === 0) throw new CustomError({ message: 'Not a valid filename', code: 400 })
 
     if (path.length === 0) throw new CustomError({ message: 'Not a valid path', code: 400 })
 

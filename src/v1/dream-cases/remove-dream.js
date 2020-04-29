@@ -11,6 +11,7 @@ module.exports = function makeRemoveDream ({ dreamQuery, fileQuery }) {
 
     const hardDeletedDream = await dreamQuery.hardDeleteById({ dreamId })
     const hardDeletedFile = await fileQuery.hardDeleteManyById({ fileIds: hardDeletedDream.images })
+    // const hardDeletedGCS = await fileQuery.hardDeleteManyById({ GCSIds: hardDeletedFile.gcs })
 
     return {
       dream: hardDeletedDream,
@@ -18,6 +19,10 @@ module.exports = function makeRemoveDream ({ dreamQuery, fileQuery }) {
         deletedImages: hardDeletedDream.images,
         deletedCount: hardDeletedFile.deletedCount
       }
+      // gcs:{
+      //   deletedImages: hardDeletedFile.gcs,
+      //   deletedCount: hardDeletedGCS.deletedCount
+      // }
     }
   }
 }
