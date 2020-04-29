@@ -1,5 +1,4 @@
 module.exports = function makeGCSModel ({ mongoose }) {
-  const { ObjectId } = mongoose.Types
   const schema = new mongoose.Schema(
     {
       type: { type: String, default: '', index: true },

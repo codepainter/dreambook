@@ -39,7 +39,7 @@ module.exports = function makeGCSQuery ({ GCS, storage }) {
     const created = await GCS.insertMany(GCSInfos, { lean: true })
     log('createMany:', created)
     return created.map(file => {
-      let { _id, ...info } = file
+      const { _id, ...info } = file
       return { id: _id.toString(), ...info, _id }
     })
   }
