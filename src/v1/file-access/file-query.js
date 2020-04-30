@@ -36,7 +36,7 @@ module.exports = function makeFileQuery ({ File }) {
   }
 
   async function findManyById ({ fileIds } = {}) {
-    const foundMany = await File.find({ fileIds })
+    const foundMany = await File.find({ _id: { $in: fileIds } })
       .populate('gcs')
       .sort({ createdAt: 1 })
       .lean()
@@ -54,7 +54,7 @@ module.exports = function makeFileQuery ({ File }) {
   }
 
   async function hardDeleteById ({ fileId } = {}) {
-    const { _id, ...deleted } = await File.findOneAndDelete({ _id: fileId })
+    const deleted = await File.findOneAndDelete({ _id: fileId })
     log('hardDeleteById:', { _id, ...deleted })
     return { id: _id.toString(), ...deleted._doc, _id }
   }
