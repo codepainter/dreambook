@@ -8,7 +8,7 @@ const createDream = require('./create-dream')({ dreamQuery, fileQuery, GCSQuery 
 const readDream = require('./read-dream')({ dreamQuery })
 const updateDream = require('./update-dream')({ dreamQuery })
 const deleteDream = require('./delete-dream')({ dreamQuery }) // soft delete
-const removeDream = require('./remove-dream')({ dreamQuery, fileQuery }) // hard delete
+const removeDream = require('./remove-dream')({ dreamQuery, fileQuery, GCSQuery }) // hard delete
 
 module.exports = {
   createDream,

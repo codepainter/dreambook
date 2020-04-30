@@ -58,7 +58,7 @@ module.exports = function makeDreamQuery ({ Dream }) {
   }
 
   async function hardDeleteById ({ dreamId }) {
-    const { _id, ...deleted } = await Dream.findByIdAndDelete(dreamId)
+    const { _id, ...deleted } = await Dream.findOneAndDelete({ _id: dreamId })
     log('hardDeleteById:', { _id, ...deleted })
     return { id: _id.toString(), ...deleted._doc, _id }
   }
