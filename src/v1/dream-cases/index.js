@@ -1,9 +1,10 @@
 // DATA-ACCESS
 const dreamQuery = require('../dream-access').query
 const fileQuery = require('../file-access').query
+const GCSQuery = require('../gcs-access').query
 
 // USE-CASES
-const createDream = require('./create-dream')({ dreamQuery, fileQuery })
+const createDream = require('./create-dream')({ dreamQuery, fileQuery, GCSQuery })
 const readDream = require('./read-dream')({ dreamQuery })
 const updateDream = require('./update-dream')({ dreamQuery })
 const deleteDream = require('./delete-dream')({ dreamQuery }) // soft delete
