@@ -11,6 +11,12 @@ module.exports = function makeGCSQuery ({ GCS, storage }) {
     hardDeleteManyByIds
   })
 
+  function deconstruct (obj) {
+    let { _id, ...info } = obj._doc ? obj._doc : obj
+    log('deconstruct:', { _id, ...info })
+    return { id: _id.toString(), ...info, _id }
+  }
+
   // GCS Functions
   async function upload ({ bucketName, type, path, target, mimetype }) {
     const [uploaded, fullResponse] = await storage.bucket(bucketName).upload(path, {
@@ -50,30 +56,28 @@ module.exports = function makeGCSQuery ({ GCS, storage }) {
 
   // DB Functions
   async function create (GCSInfo) {
+    log('create:', GCSInfo)
     const created = await GCS.create(GCSInfo)
-    const { _id, ...info } = created.toObject()
-    log('create:', { _id, ...info })
-    return { id: _id.toString(), ...info, _id }
+    return deconstruct(created.toObject())
   }
 
   async function createMany (GCSInfos) {
+    log('createMany', GCSInfos)
     const created = await GCS.insertMany(GCSInfos, { lean: true })
-    log('createMany:', created)
     return created.map(file => {
-      const { _id, ...info } = file
-      return { id: _id.toString(), ...info, _id }
+      return deconstruct(file)
     })
   }
 
   async function hardDeleteById ({ GCSId } = {}) {
-    const { _id, ...deleted } = await GCS.findOneAndDelete({ _id: GCSId })
-    log('hardDeleteById:', { _id, ...deleted })
-    return { id: _id.toString(), ...deleted._doc, _id }
+    log('hardDeleteById', GCSId)
+    const deleted = await GCS.findOneAndDelete({ _id: GCSId })
+    return deconstruct(deleted)
   }
 
   async function hardDeleteManyByIds ({ GCSIds } = {}) {
+    log('hardDeleteManyByIds', GCSIds)
     const hardDeletedMany = await Promise.all(GCSIds.map(GCSId => hardDeleteById({ GCSId })))
-    log('hardDeleteManyByIds:', hardDeletedMany)
     return hardDeletedMany
   }
 }

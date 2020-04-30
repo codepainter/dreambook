@@ -10,56 +10,56 @@ module.exports = function makeDreamQuery ({ Dream }) {
     hardDeleteById
   })
 
-  async function create (dreamInfo) {
-    const created = await Dream.create(dreamInfo)
-    const { _id, ...info } = created.toObject()
-    log('create:', { _id, ...info })
+  function deconstruct (obj) {
+    let { _id, ...info } = obj._doc ? obj._doc : obj
+    log('deconstruct:', { _id, ...info })
     return { id: _id.toString(), ...info, _id }
+  }
+
+  async function create (dreamInfo) {
+    log('create:', dreamInfo)
+    const created = await Dream.create(dreamInfo)
+    return deconstruct(created.toObject())
   }
 
   async function findById ({ dreamId, deleted = false }) {
+    log('findById', { dreamId, deleted })
     const found = await Dream.findById(dreamId)
       .populate({ path: 'images', populate: { path: 'gcs' } })
       .lean()
-    log('findById:', found)
     if (!found) return false
-    const { _id, ...info } = found
-    return { id: _id.toString(), ...info, _id }
+    return deconstruct(found)
   }
 
-  async function findByUserId ({ userId }) {
-    const dreams = await Dream.find({ userId, deleted: false })
+  async function findByUserId ({ userId, deleted = false }) {
+    log('findByUserId', { userId, deleted })
+    const dreams = await Dream.find({ userId, deleted })
       .populate({ path: 'images', populate: { path: 'gcs' } })
       .lean()
-    log('findByuserId:', dreams)
     if (dreams.length === 0) return false
     return dreams.map(dream => {
-      const { _id, ...info } = dream
-      return { id: _id.toString(), ...info, _id }
+      return deconstruct(dream)
     })
   }
 
   async function findByUserIdAndAchieved ({ userId, achieved = true, deleted = false }) {
+    log('findByUserIdAndAchieved', { userId, achieved, deleted })
     const dreams = await Dream.find({ userId, achieved, deleted })
       .populate({ path: 'images', populate: { path: 'gcs' } })
       .lean()
-    log('findByUserIdAndAchieved:', dreams)
     if (dreams.length === 0) return false
-    return dreams.map(dream => {
-      const { _id, ...info } = dream
-      return { id: _id.toString(), ...info, _id }
-    })
+    return dreams.map(dream => deconstruct(dream))
   }
 
   async function updateById ({ dreamId, toUpdate }) {
-    const { _id, ...updated } = await Dream.findByIdAndUpdate(dreamId, toUpdate, { new: true, lean: true })
-    log('updateById:', { _id, ...updated })
-    return { id: _id.toString(), ...updated, _id }
+    log('updateById', { dreamId, toUpdate })
+    const updated = await Dream.findByIdAndUpdate(dreamId, toUpdate, { new: true, lean: true })
+    return deconstruct(updated)
   }
 
   async function hardDeleteById ({ dreamId }) {
-    const { _id, ...deleted } = await Dream.findOneAndDelete({ _id: dreamId })
-    log('hardDeleteById:', { _id, ...deleted })
-    return { id: _id.toString(), ...deleted._doc, _id }
+    log('hardDeleteById', dreamId)
+    const deleted = await Dream.findOneAndDelete({ _id: dreamId })
+    return deconstruct(deleted)
   }
 }
