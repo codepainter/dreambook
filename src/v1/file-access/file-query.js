@@ -8,7 +8,7 @@ module.exports = function makeFileQuery ({ File }) {
     findManyById,
     updateById,
     hardDeleteById,
-    hardDeleteManyById
+    hardDeleteManyByIds
   })
 
   async function create (fileInfo) {
@@ -54,14 +54,14 @@ module.exports = function makeFileQuery ({ File }) {
   }
 
   async function hardDeleteById ({ fileId } = {}) {
-    const deleted = await File.findByIdAndDelete(fileId)
-    log('hardDeleteById:', deleted)
-    return deleted
+    const { _id, ...deleted } = await File.findOneAndDelete({ _id: fileId })
+    log('hardDeleteById:', { _id, ...deleted })
+    return { id: _id.toString(), ...deleted._doc, _id }
   }
 
-  async function hardDeleteManyById ({ fileIds } = {}) {
-    const deletedMany = await File.deleteMany({ _id: { $in: fileIds } })
-    log('hardDeleteManyById:', deletedMany)
-    return deletedMany
+  async function hardDeleteManyByIds ({ fileIds } = {}) {
+    const hardDeletedMany = await Promise.all(fileIds.map(fileId => hardDeleteById({ fileId })))
+    log('hardDeleteManyByIds:', hardDeletedMany)
+    return hardDeletedMany
   }
 }
