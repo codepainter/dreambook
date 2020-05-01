@@ -8,54 +8,62 @@ module.exports = function makeFileQuery ({ File }) {
     findManyById,
     updateById,
     hardDeleteById,
-    hardDeleteManyById
+    hardDeleteManyByIds
   })
 
-  async function create (fileInfo) {
-    const created = await File.create(fileInfo)
-    const { _id, ...info } = created.toObject()
-    log('create:', { _id, ...info })
+  function deconstruct (obj) {
+    const { _id, ...info } = obj._doc ? obj._doc : obj
+    log('deconstruct:', { _id, ...info })
     return { id: _id.toString(), ...info, _id }
+  }
+
+  async function create (fileInfo) {
+    log('create:', fileInfo)
+    const created = await File.create(fileInfo)
+    return deconstruct(created.toObject())
   }
 
   async function createMany (fileInfos) {
-    const created = await File.insertMany(fileInfos, { lean: true })
-    log('createMany:', created)
-    return created
+    log('createMany', fileInfos)
+    const createdMany = await File.insertMany(fileInfos, { lean: true })
+    return createdMany.map(file => deconstruct(file))
   }
 
   async function findById ({ fileId } = {}) {
-    const { _id, ...info } = await File.findById(fileId).lean()
-    log('findById:', { _id, ...info })
-    return { id: _id.toString(), ...info, _id }
+    log('findById', fileId)
+    const found = await File.findById(fileId)
+      .populate('gcs')
+      .lean()
+    if (!found) return false
+    return deconstruct(found)
   }
 
   async function findManyById ({ fileIds } = {}) {
-    const foundMany = await File.find({ fileIds })
+    log('findManyById', fileIds)
+    const foundMany = await File.find({ _id: { $in: fileIds } })
+      .populate('gcs')
       .sort({ createdAt: 1 })
       .lean()
-    log('findManyById:', foundMany)
-    return foundMany.map(file => {
-      const { _id, ...info } = file
-      return { id: _id.toString(), ...info, _id }
-    })
+    log('foundManyById:', foundMany)
+    if (foundMany.length === 0) return false
+    return foundMany.map(file => deconstruct(file))
   }
 
   async function updateById ({ fileId, toUpdate } = {}) {
-    const { _id, ...info } = await File.findByIdAndUpdate(fileId, toUpdate, { new: true, lean: true, upsert: true })
-    log('updateById:', { _id, ...info })
-    return { id: _id.toString(), ...info, _id }
+    log('updateById:', { fileId, toUpdate })
+    const updated = await File.findByIdAndUpdate(fileId, toUpdate, { new: true, lean: true, upsert: true })
+    return deconstruct(updated)
   }
 
   async function hardDeleteById ({ fileId } = {}) {
-    const deleted = await File.findByIdAndDelete(fileId)
-    log('hardDeleteById:', deleted)
-    return deleted
+    log('hardDeleteById:', fileId)
+    const hardDeleted = await File.findOneAndDelete({ _id: fileId })
+    return deconstruct(hardDeleted)
   }
 
-  async function hardDeleteManyById ({ fileIds } = {}) {
-    const deletedMany = await File.deleteMany({ _id: { $in: fileIds } })
-    log('hardDeleteManyById:', deletedMany)
-    return deletedMany
+  async function hardDeleteManyByIds ({ fileIds } = {}) {
+    log('hardDeleteManyByIds', fileIds)
+    const hardDeletedMany = await Promise.all(fileIds.map(fileId => hardDeleteById({ fileId })))
+    return hardDeletedMany
   }
 }
