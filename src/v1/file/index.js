@@ -5,7 +5,15 @@ const mongoId = Object.freeze({
   isValid: id => ObjectId.isValid(id)
 })
 
-const makeMeta = require('./meta')()
-const makeFile = require('./file')({ mongoId, makeMeta })
+const validate = Object.freeze({
+  isAllowed: (allowedMimeTypes, mimetype) => allowedMimeTypes.includes(mimetype),
+  isLessThan: (size, maxSize) => size < maxSize,
+  isImage: mimetype => mimetype.split('/')[0] === 'image',
+  isVideo: mimetype => mimetype.split('/')[0] === 'video'
+})
+
+const makeGCS = require('../gcs')
+const makeMeta = require('./meta')({ validate })
+const makeFile = require('./file')({ mongoId, makeMeta, makeGCS })
 
 module.exports = makeFile

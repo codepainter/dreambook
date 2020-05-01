@@ -3,9 +3,19 @@ module.exports = function makeRemDream ({ removeDream }) {
     const log = require('debug')('controllers:rem-dream')
     try {
       const value = await removeDream({ dreamId: httpRequest.body.dreamId })
+      const { hardDeletedDream, hardDeletedFiles } = value
       return {
         statusCode: 200,
-        body: value
+        body: {
+          deleted: true,
+          dream: {
+            id: hardDeletedDream.id,
+            images: hardDeletedFiles.map(file => ({
+              fileId: file.deletedFilesFromDB.id,
+              gcs: file.hardDeletedGCS.map(gcs => gcs.deletedGCSFromDB.id)
+            }))
+          }
+        }
       }
     } catch (error) {
       log('error:', error)
