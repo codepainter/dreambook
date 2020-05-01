@@ -10,6 +10,8 @@ module.exports = function makeCreateDream ({ dreamQuery, fileQuery, GCSQuery }) 
   return async function createDream (dreamData) {
     log('dreamData:', dreamData)
 
+    // TODO: makeFile BEFORE upload
+
     // Upload files to GCS
     const filesUploaded = await Promise.all(
       dreamData.images.map(async file => {
@@ -22,7 +24,7 @@ module.exports = function makeCreateDream ({ dreamQuery, fileQuery, GCSQuery }) 
             await GCSQuery.create(
               makeGCS(
                 await GCSQuery.upload({
-                  bucketName: 'this-is-central', //
+                  bucket: 'this-is-central', //
                   type: 'original',
                   path: file.path,
                   target: `dream/${dreamData.userId}/original/${uuidv4()}-${file.originalname}`,
@@ -42,7 +44,7 @@ module.exports = function makeCreateDream ({ dreamQuery, fileQuery, GCSQuery }) 
       filename: file.gcs()[0].filename,
       // path: file.path(),
       path: file.gcs()[0].gslink,
-      meta: file.meta().payload(),
+      meta: file.meta(),
       // meta: {
       //   fieldname: file.meta().fieldname(),
       //   originalname: file.meta().originalname(),

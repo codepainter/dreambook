@@ -12,14 +12,14 @@ module.exports = function makeGCSQuery ({ GCS, storage }) {
   })
 
   function deconstruct (obj) {
-    let { _id, ...info } = obj._doc ? obj._doc : obj
+    const { _id, ...info } = obj._doc ? obj._doc : obj
     log('deconstruct:', { _id, ...info })
     return { id: _id.toString(), ...info, _id }
   }
 
   // GCS Functions
-  async function upload ({ bucketName, type, path, target, mimetype }) {
-    const [uploaded, fullResponse] = await storage.bucket(bucketName).upload(path, {
+  async function upload ({ bucket, type, path, target, mimetype }) {
+    const [uploaded, fullResponse] = await storage.bucket(bucket).upload(path, {
       destination: target,
       public: true,
       metadata: {
@@ -32,9 +32,9 @@ module.exports = function makeGCSQuery ({ GCS, storage }) {
     // log(`${path} uploaded to ${bucketName} as ${uploaded.name}`)
     return {
       type,
-      filename: `https://storage.googleapis.com/${bucketName}/${uploaded.name}`,
-      gslink: `gs://${bucketName}/${uploaded.name}`,
-      bucket: bucketName,
+      filename: `https://storage.googleapis.com/${bucket}/${uploaded.name}`,
+      gslink: `gs://${bucket}/${uploaded.name}`,
+      bucket,
       key: uploaded.name
     }
   }

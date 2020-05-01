@@ -19,7 +19,7 @@ module.exports = function buildMakeFile ({ mongoId, makeMeta, makeGCS }) {
 
     if (!Array.isArray(gcs)) throw new CustomError({ message: 'GCS must be an array', code: 400 })
 
-    const madeMeta = makeMeta(meta)
+    const madeMeta = makeMeta(meta).payload()
     const madeGCS = gcs.map(g => makeGCS(g).payload())
 
     return Object.freeze({
