@@ -11,6 +11,7 @@ module.exports = function makeGCSQuery ({ GCS, storage }) {
     hardDeleteManyByIds
   })
 
+  // helpers
   function deconstruct (obj) {
     const { _id, ...info } = obj._doc ? obj._doc : obj
     log('deconstruct:', { _id, ...info })
@@ -41,7 +42,8 @@ module.exports = function makeGCSQuery ({ GCS, storage }) {
 
   async function download () {
     log('TODO: a download function')
-    // TODO: probably a download function to /tmp/something
+    // TODO: probably a download function to /tmp/or/something
+    // returns a path I think
     return false
   }
 
