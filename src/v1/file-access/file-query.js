@@ -12,7 +12,7 @@ module.exports = function makeFileQuery ({ File }) {
   })
 
   function deconstruct (obj) {
-    let { _id, ...info } = obj._doc ? obj._doc : obj
+    const { _id, ...info } = obj._doc ? obj._doc : obj
     log('deconstruct:', { _id, ...info })
     return { id: _id.toString(), ...info, _id }
   }
