@@ -37,9 +37,7 @@ module.exports = function makeDreamQuery ({ Dream }) {
       .populate({ path: 'images', populate: { path: 'gcs' } })
       .lean()
     if (dreams.length === 0) return false
-    return dreams.map(dream => {
-      return deconstruct(dream)
-    })
+    return dreams.map(dream => deconstruct(dream))
   }
 
   async function findByUserIdAndAchieved ({ userId, achieved = true, deleted = false }) {

@@ -40,8 +40,14 @@ module.exports = function buildMakeDream ({ mongoId, time, validate, sanitize, m
       images: () => madeImages,
       date: () => date,
       caption: () => caption,
-      achieved: () => achieved,
-      deleted: () => deleted,
+      isAchieved: () => achieved,
+      isDeleted: () => deleted,
+      markDelete: () => {
+        deleted = true
+      },
+      markUndelete: () => {
+        deleted = false
+      },
       _id: () => id
     })
   }
