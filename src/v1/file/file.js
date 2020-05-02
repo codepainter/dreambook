@@ -9,7 +9,7 @@ module.exports = function buildMakeFile ({ mongoId, makeMeta, makeGCS }) {
     meta = {},
     gcs = []
   } = {}) {
-    if (!mongoId.isValid(id)) throw new CustomError({ message: 'Not a valid dreamId', code: 400 })
+    if (!mongoId.isValid(id)) throw new CustomError({ message: 'Not a valid fileId', code: 400 })
 
     if (type.length === 0) throw new CustomError({ message: 'Not a valid type', code: 400 })
 

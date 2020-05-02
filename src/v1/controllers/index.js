@@ -24,16 +24,16 @@ function mapImages (file) {
 }
 
 function reduceFile (file) {
-  let original = find(file.gcs, { type: 'original' })
-  let quality = find(file.gcs, { type: 'quality' })
-  let thumbnail = find(file.gcs, { type: 'thumbnail' })
-  let thumbnail_small = find(file.gcs, { type: 'thumbnail_small' })
+  const original = find(file.gcs, { type: 'original' })
+  const quality = find(file.gcs, { type: 'quality' })
+  const thumbnail = find(file.gcs, { type: 'thumbnail' })
+  const thumbnailSmall = find(file.gcs, { type: 'thumbnail_small' })
   return {
     id: file._id,
     original: !isUndefined(original) ? original.filename : undefined,
     quality: !isUndefined(quality) ? quality.filename : undefined,
     thumbnail: !isUndefined(thumbnail) ? thumbnail.filename : undefined,
-    thumbnail_small: !isUndefined(thumbnail_small) ? thumbnail_small.filename : undefined,
+    thumbnail_small: !isUndefined(thumbnailSmall) ? thumbnailSmall.filename : undefined,
     height: has(file.meta, 'height') ? file.meta.height : undefined,
     width: has(file.meta, 'width') ? file.meta.width : undefined,
     _id: file._id
