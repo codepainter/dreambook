@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dreambook
+spec:
+  ports:
+    - port: 3000
+  type: LoadBalancer
+  selector:
+    app: dreambook
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dreambook
+spec:
+  selector:
+    matchLabels:
+      app: dreambook
+  template:
+    metadata:
+      labels:
+        app: dreambook
+    spec:
+      containers:
+        - name: dreambook
+          image: dreambook-img
+          ports:
+            - containerPort: 3000
