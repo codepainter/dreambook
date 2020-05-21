@@ -8,7 +8,7 @@ const upload = multer({ dest: os.tmpdir() })
 
 module.exports = async (fastify, opts) => {
   fastify.get('/ping', async (request, reply) => reply.send('pong'))
-  fastify.get('/health', async (request, reply) => reply.send('I am healthy'))
+  fastify.get('/health', async (request, reply) => reply.send('I am health'))
 
   fastify.register(multer.contentParser)
   const { callback } = require('../callback-adapters').fastify({
