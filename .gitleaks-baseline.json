@@ -1,0 +1,23 @@
+[
+ {
+  "RuleID": "private-key",
+  "Description": "Identified a Private Key, which may compromise cryptographic security and sensitive data encryption.",
+  "StartLine": 5,
+  "EndLine": 5,
+  "StartColumn": 20,
+  "EndColumn": 1749,
+  "Match": "REDACTED",
+  "Secret": "REDACTED",
+  "File": "src/secrets/gcs.json",
+  "SymlinkFile": "",
+  "Commit": "664d89ea4c99cf0a95f3a1a49d103f4cf35e15bc",
+  "Link": "https://github.com/codepainter/dreambook/blob/664d89ea4c99cf0a95f3a1a49d103f4cf35e15bc/src/secrets/gcs.json#L5",
+  "Entropy": 6.0142694,
+  "Author": "Abiyasa",
+  "Email": "abiyasa2410@gmail.com",
+  "Date": "2020-04-28T10:46:18Z",
+  "Message": "GCS working kinda\n\nbut still wrong",
+  "Tags": [],
+  "Fingerprint": "664d89ea4c99cf0a95f3a1a49d103f4cf35e15bc:src/secrets/gcs.json:private-key:5"
+ }
+]
